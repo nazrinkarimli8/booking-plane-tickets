@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FlightsFileDao extends FlightsDao {
     private static final String RESOURCE_PATH = "src/main/java/az/edu/turing/resource/";
-    private static final String FLIGHTS_FILE_PATH = RESOURCE_PATH.concat("flights.bean");
+    private static final String FLIGHTS_FILE_PATH = RESOURCE_PATH.concat("flights.json");
     private final ObjectMapper objectMapper;
 
     public FlightsFileDao(ObjectMapper objectMapper) {
@@ -47,7 +47,7 @@ public class FlightsFileDao extends FlightsDao {
         } catch (IOException e) {
             System.out.println("Error while reading flights from file: " + e.getMessage());
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

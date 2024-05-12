@@ -24,10 +24,12 @@ public class FlightsServiceImpl implements FlightsService {
         FlightsEntity flightsEntity = new FlightsEntity(
                 flightsDto.getDepartureDateTime(),
                 flightsDto.getDestination(),
-                flightsDto.getSeats());
-        Collection<FlightsEntity> flights = flightsDao.getAll();
-        flights.add(flightsEntity);
-        flightsDao.save(flights);
+                flightsDto.getLocation(),
+                flightsDto.getSeats(),
+                flightsDto.getFlightId());
+        ArrayList<FlightsEntity> flightForAdd = new ArrayList<>(flightsDao.getAll());
+        flightForAdd.add(flightsEntity);
+        flightsDao.save(flightForAdd);
     }
 
     @Override

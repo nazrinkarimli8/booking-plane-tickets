@@ -1,5 +1,6 @@
 package az.edu.turing.controller;
 
+import az.edu.turing.entity.FlightsEntity;
 import az.edu.turing.model.FlightsDto;
 import az.edu.turing.service.FlightsService;
 

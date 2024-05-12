@@ -29,6 +29,16 @@ public final class FlightsEntity {
         this.seats = seats;
     }
 
+    public FlightsEntity( LocalDateTime departureDateTime, String destination, String location, int seats, long flightId) {
+        this.flightId = flightId;
+        this.departureDateTime = departureDateTime;
+        this.destination = destination;
+        this.location = location;
+        this.seats = seats;
+    }
+
+
+
     public LocalDateTime getDepartureDateTime() {
         return departureDateTime;
     }
