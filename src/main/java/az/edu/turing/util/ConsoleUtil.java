@@ -109,8 +109,7 @@ public class ConsoleUtil {
             for (FlightsDto f : flights) {
                 System.out.println(f.getDepartureDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + " - "
                         + f.getDestination() + " - "
-                        + f.getSeats()
-                );
+                        + f.getSeats());
             }
         } else {
             System.out.println("Flight not found!");
