@@ -37,6 +37,7 @@ public class BookingServiceImpl implements BookingService {
     public Collection<BookingEntity> getBookingsByPassenger(String fullName) {
         Predicate<BookingEntity> predicate = booking ->
                 booking.getPassengerNames().contains(fullName);
+
         return bookingDao.findAllBy(predicate);
     }
 }

@@ -158,7 +158,8 @@ public class ConsoleUtil {
             List<String> passengerNames = new ArrayList<>();
             System.out.print("Passenger: ");
             String passengerName = scanner.nextLine();
-            passengerNames.add(passengerName);
+             passengerNames = new ArrayList<>(Arrays.asList(passengerName.split(",")));
+            passengerNames.replaceAll(String::trim);
 
             BookingDto bookingDto = new BookingDto();
             bookingDto.setFlightId(selectedFlight.getFlightId());
