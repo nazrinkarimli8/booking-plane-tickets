@@ -6,6 +6,7 @@ import az.edu.turing.entity.FlightsEntity;
 import az.edu.turing.model.BookingDto;
 import az.edu.turing.service.BookingService;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Predicate;
 
@@ -22,7 +23,7 @@ public class BookingServiceImpl implements BookingService {
         BookingEntity bookingEntity = new BookingEntity(
                 bookingDto.getFlightId(),
                 bookingDto.getPassengerNames());
-        Collection<BookingEntity> bookings = bookingDao.getAll();
+        Collection<BookingEntity> bookings = new ArrayList<>(bookingDao.getAll());
         bookings.add(bookingEntity);
         bookingDao.save(bookings);
     }

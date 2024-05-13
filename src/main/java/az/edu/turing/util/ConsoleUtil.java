@@ -188,11 +188,12 @@ public class ConsoleUtil {
     public void findMyFlights() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter full name:");
-        String fullName;
+
         try {
-            fullName = scanner.nextLine();
+            String fullName = scanner.nextLine();
             Collection<BookingEntity> myFlights = bookingController.myFlights(fullName);
-            if (myFlights == null) {
+            System.out.println(myFlights);
+            if (myFlights.isEmpty()) {
                 System.out.println("No flight found under your name.");
             }
         } catch (InputMismatchException e) {
