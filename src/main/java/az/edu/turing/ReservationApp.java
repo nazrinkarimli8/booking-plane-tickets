@@ -6,6 +6,7 @@ import az.edu.turing.dao.BookingDao;
 import az.edu.turing.dao.FlightsDao;
 import az.edu.turing.dao.impl.BookingFileDao;
 import az.edu.turing.dao.impl.FlightsFileDao;
+import az.edu.turing.entity.BookingEntity;
 import az.edu.turing.entity.FlightsEntity;
 import az.edu.turing.model.BookingDto;
 import az.edu.turing.model.FlightsDto;
@@ -17,7 +18,11 @@ import az.edu.turing.util.ConsoleUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import java.awt.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ReservationApp {
     public static void main(String[] args) {
@@ -37,6 +42,11 @@ public class ReservationApp {
         FlightsDto flightDto2 = new FlightsDto(flight2.getFlightId(), flight2.getDepartureDateTime(), flight2.getDestination(), flight2.getLocation(), flight2.getSeats());
         flightsController.createFlights(flightDto1);
         flightsController.createFlights(flightDto2);
+        long flightId1 = 3294692L;
+        List<String> passengerNames = new ArrayList<>(Arrays.asList("Nurlan Ahmad", "Nazrin Karimova"));
+        BookingEntity booking1 = new BookingEntity(flightId1, passengerNames);
+        BookingDto bookingDto1 = new BookingDto(booking1.getTicketId(),booking1.getFlightId(),booking1.getPassengerNames());
+        bookingController.searchAndBookFlight(bookingDto1);
         ConsoleUtil consoleUtil = new ConsoleUtil();
         consoleUtil.start();
     }
