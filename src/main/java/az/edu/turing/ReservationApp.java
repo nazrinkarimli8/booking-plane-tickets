@@ -39,5 +39,6 @@ public class ReservationApp {
         flightsController.createFlights(flightDto2);
         ConsoleUtil consoleUtil = new ConsoleUtil();
         consoleUtil.start();
+
     }
 }
