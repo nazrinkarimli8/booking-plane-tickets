@@ -46,11 +46,7 @@ public final class BookingEntity {
 
     @Override
     public String toString() {
-        return "BookingEntity{" +
-                "ticketId=" + ticketId +
-                ", flightId=" + flightId +
-                ", passengerNames=" + passengerNames +
-                '}';
+        return "{ticketId=%d, flightId=%d, passengerNames=%s}".formatted(ticketId, flightId, passengerNames);
     }
 
     @Override
