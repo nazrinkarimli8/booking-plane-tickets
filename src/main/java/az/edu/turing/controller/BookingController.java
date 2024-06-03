@@ -13,8 +13,8 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    public void searchAndBookFlight(BookingDto bookingDto) {
-        bookingService.bookFlight(bookingDto);
+    public void searchAndBookFlight(BookingDto bookingDto,int numberofseats) {
+        bookingService.bookFlight(bookingDto, numberofseats);
     }
 
     public  void cancelBooking(long ticketId) {
