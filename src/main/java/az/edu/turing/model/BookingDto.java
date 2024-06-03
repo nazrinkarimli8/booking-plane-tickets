@@ -43,10 +43,6 @@ public class BookingDto {
 
     @Override
     public String toString() {
-        return "BookingDto{" +
-                "ticketId=" + ticketId +
-                ", flightId=" + flightId +
-                ", passengerNames=" + passengerNames +
-                '}';
+        return "{ticketId=%d, flightId=%d, passengerNames=%s}".formatted(ticketId, flightId, passengerNames);
     }
 }
