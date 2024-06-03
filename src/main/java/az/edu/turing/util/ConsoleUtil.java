@@ -7,7 +7,6 @@ import az.edu.turing.dao.FlightsDao;
 import az.edu.turing.dao.impl.BookingFileDao;
 import az.edu.turing.dao.impl.FlightsFileDao;
 import az.edu.turing.entity.BookingEntity;
-import az.edu.turing.entity.FlightsEntity;
 import az.edu.turing.exception.InvalidMenuActionException;
 import az.edu.turing.model.BookingDto;
 import az.edu.turing.model.FlightsDto;
@@ -28,21 +27,20 @@ public class ConsoleUtil {
     FlightsController flightsController = new FlightsController(flightsService);
 
     BookingDao bookingDao = new BookingFileDao(new ObjectMapper().registerModule(new JavaTimeModule()));
-    BookingService bookingService = new BookingServiceImpl(bookingDao);
+    BookingService bookingService = new BookingServiceImpl(bookingDao,flightsDao);
     BookingController bookingController = new BookingController(bookingService);
 
 
-
-
     public void displayMainMenu() {
-        System.out.println("---Main Menu---");
-        System.out.println("1.Online-board");
-        System.out.println("2.Show flight info");
-        System.out.println("3.Search and book a flight");
-        System.out.println("4.Cancel booking");
-        System.out.println("5.My flights");
-        System.out.println("6.Exit");
-        System.out.print("Enter your choice : ");
+        System.out.println("---Main Menu---\n" +
+                "1. Online-board\n" +
+                "2. Show flight info\n" +
+                "3. Search and book a flight\n" +
+                "4. Cancel booking\n" +
+                "5. My flights\n" +
+                "6. Exit\n" +
+                "Enter your choice: ");
+
     }
 
     public void start() {
@@ -93,8 +91,7 @@ public class ConsoleUtil {
         List<FlightsDto> flights = flightsController.getOnlineBoard(location, dateTime);
         if (flights != null) {
             for (FlightsDto flight : flights) {
-                System.out.println(flight.getFlightId() + " - " + flight.getDestination() + " - " +
-                        flight.getDepartureDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                System.out.println(flight.getFlightId() + " - " + flight.getDestination() + " - " + flight.getDepartureDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
             }
         } else {
             System.out.println("Flight not found!");
@@ -109,15 +106,12 @@ public class ConsoleUtil {
             List<FlightsDto> flights = flightsController.getFlightInfoByFlightId(id);
             if (flights != null) {
                 for (FlightsDto f : flights) {
-                    System.out.println(f.getDepartureDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + " - "
-                            + f.getDestination() + " - "
-                            + f.getSeats()
-                    );
+                    System.out.println(f.getDepartureDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + " - " + f.getDestination() + " - " + f.getSeats());
                 }
             } else {
                 System.out.println("Flight not found!");
             }
-        }catch (InputMismatchException e){
+        } catch (InputMismatchException e) {
             System.out.println("Enter valid flight Id");
         }
 
@@ -137,7 +131,7 @@ public class ConsoleUtil {
         } else {
             System.out.println("Found Flights:");
             for (FlightsDto flight : foundFlights) {
-                System.out.println(flight.getFlightId() + ". " + flight.toString());
+                System.out.println(flight.getFlightId() + ". " + flight);
             }
 
             System.out.print("Enter the ID of the flight you want to book (0 to return to the main menu): ");
@@ -155,35 +149,27 @@ public class ConsoleUtil {
             }
 
             System.out.println("Enter names and surnames of all passengers:");
-            List<String> passengerNames = new ArrayList<>();
-            System.out.print("Passenger: ");
+            System.out.print("Passengers: ");
             String passengerName = scanner.nextLine();
-             passengerNames = new ArrayList<>(Arrays.asList(passengerName.split(",")));
+            List<String> passengerNames = new ArrayList<>(Arrays.asList(passengerName.split(",")));
             passengerNames.replaceAll(String::trim);
 
             BookingDto bookingDto = new BookingDto();
             bookingDto.setFlightId(selectedFlight.getFlightId());
             bookingDto.setPassengerNames(passengerNames);
 
-            bookingController.searchAndBookFlight(bookingDto);
+            bookingController.searchAndBookFlight(bookingDto, passengerNames.size());
             System.out.println("Flight booked successfully!");
         }
     }
 
     public void cancelBooking() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter ticket ID (7 digits):");
+        System.out.print("Enter ticket ID: ");
         long id;
-        try {
-            id = scanner.nextLong();
-            if (String.valueOf(id).length() != 7) {
-                throw new InputMismatchException("Ticket ID must be 7 digits long.");
-            }
-            bookingController.cancelBooking(id);
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input type. Please enter a valid 7-digit long value for the ticket ID.");
+        id = scanner.nextLong();
+        bookingController.cancelBooking(id);
 
-        }
     }
 
     public void findMyFlights() {
@@ -200,6 +186,5 @@ public class ConsoleUtil {
         } catch (InputMismatchException e) {
             System.out.println("Invalid input type. Please enter a valid full name");
         }
-
     }
 }
