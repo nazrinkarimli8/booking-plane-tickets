@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 
 public interface BookingService {
 
-    void bookFlight(BookingDto bookingDto);
+    void bookFlight(BookingDto bookingDto,int numberofseats);
 
     void cancelBooking(long bookingId);
 
